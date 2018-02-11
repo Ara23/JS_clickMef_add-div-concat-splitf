@@ -1,0 +1,129 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1> Homework - JavaScript </h1>
+
+<p id="schimba" onclick="doArr()" >Click Me</p>
+
+<p>
+	<input type="text" value="" id="a">
+	<select id="op">
+	<option value="+">+</option>
+	
+	</select>
+	<input type="text" value="" id="b">
+	<input type="submit" value="=" onclick="math()">
+	<input type="text" value="" id="c">
+</p>
+
+<p>
+	<input type="text" value="" id="string">
+	<input type="text" value="" id="string1">
+	<input type="submit" value="split" onclick="concatSplit('split')">
+	<input type="submit" value="concat" onclick="concatSplit('concat')">
+	<input type="text" value="" id="strResult">
+	<span id="concatUl"></span>
+</p>
+
+<script type="text/javascript">
+	
+	function doArr(newArr = '')
+	{
+		var newArr = (newArr != '') ? newArr : ['Romania', 'Bulgaria', 'Netherlands','Norway','Spain', 'Portugal'];	
+		var newArrLength = newArr.length;
+		var txt = '<ul>';
+		
+		for (var i = 0; i < newArrLength; i++) {
+			//alert(newArr[i]);
+			txt += '<li>' + newArr[i]  + '</li>';
+		}
+		
+		txt += '<ul>';
+		document.getElementById('schimba').innerHTML  = txt;
+	}
+	
+	function math(a, b, op) 
+	{
+		try {
+		
+			a = document.getElementById("a").value;
+			b = document.getElementById("b").value;
+			//Block of code to try
+			checkifIsInt(a);
+			checkifIsInt(b);
+		}
+		catch(err) {
+			//Block of code to handle errors
+			alert(err);
+		} 
+		finally {
+			//Block of code to be executed regardless of the try / catch result
+			mathemathics(a, b, op)
+		}
+	}
+	
+	function checkifIsInt(n)
+	{
+		if( !isNaN(parseFloat(n)) && isFinite(n)  ) {
+			return n;
+		} else {
+			throw  n + " is not a number";
+		} 
+	}
+	
+	function mathemathics(a = '', b = '', op = '')
+	{
+		a = ( a == '' ) ? document.getElementById("a").value : a;
+		b = ( b == '' ) ? document.getElementById("b").value : b;
+		op = ( op == '' ) ? document.getElementById("op").value : op;
+		
+		//var result = eval( a + op + b ); // pentru a trata op ca math operator folosim eval, altfel trebuia sa folosim switch / if / sau o alta functie.
+		var result = secondMath (a, b, op);
+		
+		document.getElementById("c").value = result;
+	}
+	
+	function secondMath (a, b, op)
+	{
+		//tratam a si b ca integer
+		a = parseInt(a);
+		b = parseInt(b);
+	
+		switch (op) {
+			case '+':
+				return (a + b);
+				//break; - there is no need to use break; as on return the execution for the function will end.
+			
+			default:
+				return a + b;
+		}
+	}
+	function concatSplit(action)
+	{
+		var string  = document.getElementById("string").value;
+		var string1  = document.getElementById("string1").value;
+		
+		var firstConcat = 'array length: ';
+		
+		if(action == 'split') {
+			
+			var split = string.split(' ');
+			
+			var splitLength = split.length;
+			
+			document.getElementById('strResult').value  = firstConcat.concat(splitLength); // sau firstConcat + splitLength;
+		}
+		
+		if(action == 'concat') {
+		
+			var str = '';
+			
+			document.getElementById('strResult').value  = str.concat(string, ' ', string1);
+		}	
+	}
+	//document.getElementById("demo").innerHTML = "Hello World";
+</script>
+</body>
+</html>
